@@ -1,0 +1,131 @@
+.padded-container {
+    /* Adjusted to account for padding-left */
+    /* Assuming 40px top margin and 30px top padding */
+    flex: 1;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding: 15px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* Use auto instead of scroll to handle both overflow cases */
+}
+
+.table-wrapper {
+    position: relative;
+    max-height: 100vh;
+    overflow-x: auto;
+    overflow-y: auto;
+    border: 1.5px solid #d9d1e0;
+}
+
+.bids-table {
+    width: 100%;
+    min-width: 1200px;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+}
+
+
+/* Header styles */
+
+.bids-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: white;
+}
+
+.bids-table th {
+    background-color: white;
+    font-weight: 600;
+    color: black;
+    font-size: 18px;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1.5px solid #d9d1e0;
+}
+
+
+/* Cell styles */
+
+.bids-table td {
+    padding: 12px 16px;
+    border-bottom: 1.5px solid #ddd;
+    vertical-align: middle;
+}
+
+
+/* Column widths - consistent between th and td */
+
+.bids-table th:nth-child(1),
+.bids-table td:nth-child(1) {
+    width: 38%;
+}
+
+.bids-table th:nth-child(2),
+.bids-table td:nth-child(2) {
+    width: 15%;
+}
+
+.bids-table th:nth-child(3),
+.bids-table td:nth-child(3) {
+    width: 15%;
+}
+
+.bids-table th:nth-child(4),
+.bids-table td:nth-child(4) {
+    width: 15%;
+}
+
+.bids-table th:nth-child(5),
+.bids-table td:nth-child(5) {
+    width: 12%;
+}
+
+.bids-table th:last-child,
+.bids-table td:last-child {
+    width: 5%;
+    text-align: center;
+}
+
+
+/* Text truncation */
+
+.truncate-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+.truncate-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-weight: 600;
+}
+
+.truncate-text:hover {
+    color: #666666;
+}
+
+
+/* Sortable header styles */
+
+.sortable-header {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.sortable-header svg {
+    opacity: 0.5;
+    margin-left: 8px;
+    vertical-align: middle;
+}

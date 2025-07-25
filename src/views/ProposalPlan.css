@@ -1,0 +1,263 @@
+.outline-table input[type="text"],
+.outline-table input[type="number"] {
+    min-width: 80px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+.outline-table input[type="text"]:hover,
+.outline-table input[type="number"]:hover {
+    border-color: #e2e8f0;
+}
+
+.outline-table input[type="text"]:focus,
+.outline-table input[type="number"]:focus {
+    border-color: #3b82f6;
+    outline: none;
+    background-color: white;
+}
+
+.outline-table input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.editable-cell {
+    background-color: white;
+    color: black;
+    width: 95%;
+}
+
+.outline-table {
+    width: 100%;
+    min-width: 1000px;
+    /* Add minimum width to prevent excessive shrinking */
+    table-layout: fixed;
+    margin: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ced4da;
+    background-color: white;
+    position: relative;
+    z-index: 1;
+}
+
+
+/* Ensure parent container allows horizontal scrolling */
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+}
+
+.outline-table th,
+.outline-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.writingplan-box {
+    background-color: #f2f2f2;
+    font-weight: 500;
+    color: black;
+}
+
+.writingplan-text-area {
+    width: 100%;
+    background-color: white;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+    height: 140px;
+    resize: none;
+    color: black;
+    border-radius: 8px;
+}
+
+
+/* Add left margin to the first column */
+
+.outline-table td:first-child;
+.outline-table th:first-child {
+    padding-left: 20px;
+}
+
+.outline-table th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+    color: black;
+    font-size: 16px;
+}
+
+
+/* Specifically target the Action column to make it narrower */
+
+.outline-table th:last-child,
+.outline-table td:last-child {
+    width: 12%;
+    justify-content: center;
+}
+
+.outline-table tr:last-child td {
+    border-bottom: none;
+}
+
+.status-menu-button {
+    font-weight: 600;
+}
+
+.status-not-started {
+    color: #000000;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid #000000;
+}
+
+.status-in-progress {
+    color: #FF8C00;
+    background-color: rgba(255, 140, 0, 0.1);
+    border: 1px solid #FF8C00;
+}
+
+.status-complete {
+    color: #228B22;
+    background-color: rgba(34, 139, 34, 0.1);
+    border: 1px solid #228B22;
+}
+
+
+/* Menu item hover states */
+
+.status-not-started:hover,
+.status-not-started:focus,
+.status-not-started:active {
+    background-color: rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid #000000 !important;
+}
+
+.status-in-progress:hover,
+.status-in-progress:focus,
+.status-in-progress:active {
+    background-color: rgba(255, 140, 0, 0.08) !important;
+    border: 1px solid #FF8C00 !important;
+}
+
+.status-complete:hover,
+.status-complete:focus,
+.status-complete:active {
+    background-color: rgba(34, 139, 34, 0.08) !important;
+    border: 1px solid #228B22 !important;
+}
+
+.relative {
+    position: relative;
+}
+
+.group:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+
+/* Add this to your BidExtractor.css or ProposalPlan.css file */
+
+.preview-button {
+    background-color: #f0f0f0;
+    color: #333333;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.preview-button:hover {
+    background-color: #e0e0e0;
+}
+
+.preview-button:active {
+    background-color: #d5d5d5;
+}
+
+.preview-button:disabled {
+    background-color: #f5f5f5;
+    color: #999999;
+    cursor: not-allowed;
+}
+
+
+/* Tooltip Styles */
+
+.tooltip {
+    font-size: 0.875rem;
+    opacity: 0.9 !important;
+    font-family: "Manrope", sans-serif;
+}
+
+.tooltip-inner {
+    max-width: 250px;
+    padding: 8px 12px;
+    background-color: #333;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    line-height: 1.4;
+}
+
+
+/* Ensure tooltips don't interfere with table interactions */
+
+.outline-table {
+    position: relative;
+    z-index: 1;
+}
+
+.tooltip {
+    z-index: 1070;
+}
+
+
+/* Tooltip arrow styles */
+
+.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: #333;
+}
+
+.bs-tooltip-bottom .tooltip-arrow::before {
+    border-bottom-color: #333;
+}
+
+.bs-tooltip-start .tooltip-arrow::before {
+    border-left-color: #333;
+}
+
+.bs-tooltip-end .tooltip-arrow::before {
+    border-right-color: #333;
+}
+
+
+/* Ensure buttons remain clickable with tooltips */
+
+button[data-tooltip],
+.button-with-tooltip {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* Hover state for interactive elements with tooltips */
+
+[data-tooltip]:hover {
+    z-index: 2;
+}
+
+
+/* Animation for tooltip appearance */
+
+.tooltip.show {
+    animation: tooltipFade 0.2s ease-in-out;
+}
