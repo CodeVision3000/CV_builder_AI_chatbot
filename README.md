@@ -88,6 +88,7 @@ Empower organizations and individuals to win more business by automating and enh
 ### Environment Variables
 
 - Configure environment variables for Django, React, and Office Add-in as needed (see `.env.example` or relevant config files).
+- `VITE_M365_SIGNIN_URL` (web app) and `REACT_APP_M365_SIGNIN_URL` (Word add-in) can be used to route users to your Microsoft 365 sign-in endpoint.
 
 ### Local Development
 
