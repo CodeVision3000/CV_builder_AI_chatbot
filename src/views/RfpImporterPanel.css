@@ -1,0 +1,169 @@
+/* ─── RFP Importer Panel ─────────────────────────────────────────────── */
+
+.rfp-panel {
+  border: 1.5px solid #d9d1e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 16px;
+  background: #fff;
+}
+
+.rfp-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #fafafa;
+  border-bottom: 1.5px solid #d9d1e0;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rfp-panel-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rfp-panel-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rfp-panel-filter-label {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.rfp-panel-select {
+  font-size: 13px;
+  padding: 4px 8px;
+  border: 1px solid #d9d1e0;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* ─── Table ──────────────────────────────────────────────────────────── */
+
+.rfp-table-wrapper {
+  overflow-x: auto;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.rfp-table {
+  width: 100%;
+  min-width: 860px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+}
+
+.rfp-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
+}
+
+.rfp-table th {
+  background: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1.5px solid #d9d1e0;
+  white-space: nowrap;
+}
+
+.rfp-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #eeebf0;
+  vertical-align: middle;
+}
+
+.rfp-table tbody tr:hover {
+  background: #fdf8f0;
+}
+
+/* ─── Badges ─────────────────────────────────────────────────────────── */
+
+.rfp-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rfp-state-in-progress {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.rfp-state-analyzed {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.rfp-state-complete {
+  background: #d4edda;
+  color: #155724;
+}
+
+.rfp-state-needs-review {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.rfp-estimate-number {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* ─── Misc ────────────────────────────────────────────────────────────── */
+
+.rfp-panel-empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+
+.rfp-panel-error {
+  padding: 16px;
+  color: #721c24;
+  background: #f8d7da;
+  font-size: 14px;
+}
+
+.rfp-import-btn {
+  font-size: 12px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.rfp-panel-unconfigured {
+  padding: 20px 16px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.rfp-panel-unconfigured code {
+  background: #f4f4f4;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}

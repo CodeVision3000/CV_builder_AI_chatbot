@@ -13,7 +13,8 @@ import {
   faPlus,
   faSort,
   faSortDown,
-  faSortUp
+  faSortUp,
+  faFileImport
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Skeleton } from "@mui/material";
@@ -24,6 +25,7 @@ import withAuth from "../routes/withAuth.tsx";
 import BidStatusMenu from "../buttons/BidStatusMenu.tsx";
 import KanbanView from "./KanbanView.tsx";
 import NewTenderModal from "../modals/NewTenderModal.tsx";
+import RfpImporterPanel from "./RfpImporterPanel.tsx";
 
 const Bids = () => {
   const [bids, setBids] = useState([]);
@@ -31,6 +33,7 @@ const Bids = () => {
   const [bidName, setBidName] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [bidToDelete, setBidToDelete] = useState<string | null>(null);
+  const [showRfpPanel, setShowRfpPanel] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const getAuth = useAuthUser();
@@ -394,7 +397,19 @@ const Bids = () => {
         <div className="padded-container">
           <div className="proposal-header">
             <h1 id="dashboard-title">Tender Dashboard</h1>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <Button
+                onClick={() => setShowRfpPanel((v) => !v)}
+                className={showRfpPanel ? "upload-button" : "btn btn-outline-secondary"}
+                id="rfp-importer-button"
+                title="Toggle RFP Pipeline panel"
+              >
+                <FontAwesomeIcon
+                  icon={faFileImport}
+                  style={{ marginRight: "8px" }}
+                />
+                RFP Pipeline
+              </Button>
               <Button
                 onClick={handleWriteProposalClick}
                 className="upload-button"
@@ -494,6 +509,11 @@ const Bids = () => {
               updateBidStatus={updateBidStatus}
               navigateToChatbot={navigateToChatbot}
             />
+          )}
+
+          {/* RFP Pipeline panel — shown when toggled */}
+          {showRfpPanel && (
+            <RfpImporterPanel onImportSuccess={fetchBids} />
           )}
         </div>
         <NewTenderModal
