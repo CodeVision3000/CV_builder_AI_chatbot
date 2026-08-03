@@ -4,6 +4,10 @@ export const HTTP_PREFIX = import.meta.env.VITE_REACT_APP_API_URL_PREFIX_HTTPS
   ? ""
   : "s";
 
+// RFP-Importer PostgREST integration
+export const POSTGREST_URL = import.meta.env.VITE_POSTGREST_URL || "";
+export const POSTGREST_JWT = import.meta.env.VITE_POSTGREST_JWT || "";
+
 export const placeholder_upload = `
 Paste bid material here...
     `;
