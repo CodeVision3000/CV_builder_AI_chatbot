@@ -13,7 +13,7 @@ import useAuthSignIn from "./UseAuthsignIn";
 import AuthState from "./AuthState";
 import axios, { AxiosResponse } from "axios";
 import InfoIcon from "@mui/icons-material/Info";
-import { API_URL, HTTP_PREFIX } from "../../helper/Constants";
+import { API_URL, HTTP_PREFIX, M365_SIGNIN_URL } from "../../helper/Constants";
 
 const Signin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -119,6 +119,10 @@ const Signin = () => {
     return () => {
       controller.abort(); // Cleanup: cancel any in-flight request
     };
+
+    const handleM365SignIn = () => {
+      window.location.href = M365_SIGNIN_URL;
+    };
   };
 
   const inputProps = {
@@ -158,6 +162,13 @@ const Signin = () => {
           </div>
 
           <form onSubmit={onSubmit}>
+            <Button
+              className="login-button"
+              variant="outlined"
+              onClick={handleM365SignIn}
+            >
+              Sign in with Microsoft 365
+            </Button>
             <div className="input-field">
               <TextField
                 id="email-input"

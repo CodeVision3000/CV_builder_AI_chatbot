@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 
 INSTALLED_APPS = [
     'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions',
-    'django.contrib.messages', 'django.contrib.staticfiles', 'storages', 'mytenderweb',
+    'django.contrib.messages', 'django.contrib.staticfiles', 'mytenderweb',
 ]
 
 MIDDLEWARE = [
@@ -111,4 +111,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-

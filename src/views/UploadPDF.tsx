@@ -12,7 +12,7 @@ import {
   faFileExcel,
   faFileWord
 } from "@fortawesome/free-solid-svg-icons";
-import posthog from "posthog-js";
+import analyticsClient from "../utilities/analyticsClient";
 
 interface UploadResult {
   error?: Error;
@@ -126,7 +126,7 @@ const UploadPDF: React.FC<UploadPDFProps> = ({
     setSelectedFiles((prevFiles) => [...prevFiles, ...validFiles]);
 
     if (validFiles.length > 0) {
-      posthog.capture("pdf_upload_files_selected", {
+      analyticsClient.capture("pdf_upload_files_selected", {
         fileCount: validFiles.length,
         fileTypes: validFiles.map((f) => f.type)
       });
@@ -137,7 +137,7 @@ const UploadPDF: React.FC<UploadPDFProps> = ({
         "Some files were not added due to invalid file type. Please select PDF, Word, or Excel files only.",
         "danger"
       );
-      posthog.capture("pdf_upload_invalid_file_types", {
+      analyticsClient.capture("pdf_upload_invalid_file_types", {
         fileCount: invalidTypeFiles.length,
         fileTypes: invalidTypeFiles.map((f) => f.type)
       });
@@ -145,7 +145,7 @@ const UploadPDF: React.FC<UploadPDFProps> = ({
   };
 
   const uploadFile = async (file: File) => {
-    posthog.capture("pdf_upload_started", {
+    analyticsClient.capture("pdf_upload_started", {
       fileName: file.name,
       fileType: file.type
     });
@@ -236,7 +236,7 @@ const UploadPDF: React.FC<UploadPDFProps> = ({
           `Successfully uploaded ${successCount} file(s)`,
           "success"
         );
-        posthog.capture("pdf_upload_batch_completed", {
+        analyticsClient.capture("pdf_upload_batch_completed", {
           successCount,
           failCount,
           totalFiles: selectedFiles.length

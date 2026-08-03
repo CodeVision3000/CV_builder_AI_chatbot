@@ -3,6 +3,9 @@ export const API_URL =
 export const HTTP_PREFIX = import.meta.env.VITE_REACT_APP_API_URL_PREFIX_HTTPS
   ? ""
   : "s";
+export const M365_SIGNIN_URL =
+  import.meta.env.VITE_M365_SIGNIN_URL ||
+  `http${HTTP_PREFIX}://${API_URL}/auth/microsoft/login`;
 
 // RFP-Importer PostgREST integration
 export const POSTGREST_URL = import.meta.env.VITE_POSTGREST_URL || "";

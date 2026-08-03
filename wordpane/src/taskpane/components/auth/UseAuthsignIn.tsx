@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { apiURL } from "../../helper/urls";
-import posthog from "posthog-js";
+import analyticsClient from "../../utilities/analyticsClient";
 
 const useAuthSignIn = () => {
   const signIn = useSignIn();
@@ -14,7 +14,7 @@ const useAuthSignIn = () => {
 
   const submitSignIn = async (formData) => {
     setIsLoading(true);
-    posthog.capture("sign_in_attempt", {
+    analyticsClient.capture("sign_in_attempt", {
       email: formData.email,
     });
     console.log("auth submit signin");
@@ -36,11 +36,11 @@ const useAuthSignIn = () => {
         })
       ) {
         navigate("/");
-        posthog.identify(formData.email, {
+        analyticsClient.identify(formData.email, {
           email: formData.email,
           $initial_referrer: document.referrer,
         });
-        posthog.capture("user_signed_in");
+        analyticsClient.capture("user_signed_in");
         return { success: true, message: "Log in successful!" };
       } else {
         setError("Log in unsuccessful");
@@ -51,7 +51,7 @@ const useAuthSignIn = () => {
       setIsLoading(false);
       setError(err.message || "An error occurred. Please try again.");
       console.log(err.message);
-      posthog.capture("sign_in_error", {
+      analyticsClient.capture("sign_in_error", {
         error: err.message,
         email: formData.email,
       });

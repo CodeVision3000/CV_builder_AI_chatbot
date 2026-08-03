@@ -16,7 +16,7 @@ import {
 import { Menu, MenuItem } from "@mui/material";
 import { displayAlert } from "../helper/Alert.tsx";
 import InterrogateTenderModal from "../modals/InterrogateTenderModal.tsx";
-import posthog from "posthog-js";
+import analyticsClient from "../utilities/analyticsClient";
 import UploadPDF from "../views/UploadPDF.tsx";
 import "./TenderLibrary.css";
 
@@ -93,7 +93,7 @@ const TenderLibrary = ({ object_id }) => {
 
   const handleDeleteFileClick = (event, filename) => {
     event.stopPropagation();
-    posthog.capture("tender_library_delete_file_clicked", { filename });
+    analyticsClient.capture("tender_library_delete_file_clicked", { filename });
     setFileToDelete({ filename });
     setShowDeleteFileModal(true);
   };
@@ -163,7 +163,7 @@ const TenderLibrary = ({ object_id }) => {
 
   const viewFile = async (fileName) => {
     try {
-      posthog.capture("tender_library_view_file", {
+      analyticsClient.capture("tender_library_view_file", {
         fileName,
         fileType: fileName.split(".").pop().toLowerCase()
       });

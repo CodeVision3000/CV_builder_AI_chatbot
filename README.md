@@ -20,10 +20,10 @@ Empower organizations and individuals to win more business by automating and enh
 ### Backend
 - **Framework:** Django 5 (Python 3.10+)
 - **Async/Websockets:** Daphne, Channels
-- **Storage & File Handling:** django-storages, boto3 (AWS S3), Whitenoise
-- **Email & Notifications:** django-ses, sib-api-v3-sdk (Sendinblue)
+- **Storage & File Handling:** Microsoft 365 / SharePoint-compatible document workflows, Whitenoise
+- **Email & Notifications:** Django email backend (Microsoft 365 SMTP-compatible)
 - **PDF/Doc Generation:** reportlab, xhtml2pdf, docx, mammoth
-- **Payments:** Stripe
+- **Payments:** Internal billing workflow (manual provisioning)
 
 ### Office Add-in (Wordpane)
 - **Framework:** React (TypeScript)
@@ -37,17 +37,16 @@ Empower organizations and individuals to win more business by automating and enh
 - **CI/CD:** Makefile, Husky, Pre-commit hooks
 
 ### Analytics & Monitoring
-- **User Analytics:** PostHog, Google Analytics (react-ga4)
+- **User Analytics:** First-party in-app telemetry only
 
 ---
 
-## 🌐 Third-Party Services
+## 🌐 Microsoft Ecosystem Alignment
 
-- **AWS S3**: Document storage
-- **Sendinblue**: Transactional email
-- **Stripe**: Payment processing
-- **PostHog**: Product analytics
-- **Google Analytics**: User tracking
+- **Identity:** Microsoft 365 sign-in entry points for web and Word add-in
+- **Storage:** Microsoft-protected document storage model (M365/SharePoint compatible)
+- **Email:** Microsoft 365-compatible transactional email delivery
+- **Telemetry:** Third-party analytics trackers removed from runtime
 
 ---
 
@@ -84,7 +83,7 @@ Empower organizations and individuals to win more business by automating and enh
 - Node.js (v16+), npm or yarn
 - Python 3.10+
 - Docker & Docker Compose (for production/development containers)
-- AWS credentials (for S3), Sendinblue API key, Stripe API key
+- Microsoft 365 / Entra ID app configuration for sign-in and secure document access
 
 ### Environment Variables
 

@@ -350,7 +350,7 @@ const AdminPannel = () => {
           />
         </div>
         <div className="form-group">
-          <label>Stripe Customer ID:</label>
+          <label>Billing Customer ID:</label>
           <input
             type="text"
             value={data.stripe_customer_id}

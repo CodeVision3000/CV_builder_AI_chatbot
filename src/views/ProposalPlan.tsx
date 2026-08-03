@@ -17,7 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 import StatusMenu from "../buttons/StatusMenu.tsx";
 import OutlineInstructionsModal from "../modals/OutlineInstructionsModal.tsx";
 import SectionMenu from "../buttons/SectionMenu.tsx";
-import posthog from "posthog-js";
+import analyticsClient from "../utilities/analyticsClient";
 import { Button, Form, Row, Spinner } from "react-bootstrap";
 import ProposalSidepane from "../components/SlidingSidepane.tsx";
 import ReviewerDropdown from "../components/dropdowns/ReviewerDropdown.tsx";
@@ -172,7 +172,7 @@ const ProposalPlan = () => {
     sectionIndex: number
   ) => {
     try {
-      posthog.capture("proposal_section_delete_started", {
+      analyticsClient.capture("proposal_section_delete_started", {
         bidId: object_id,
         sectionId,
         sectionIndex
@@ -181,7 +181,7 @@ const ProposalPlan = () => {
       await deleteSection(sectionId, sectionIndex);
     } catch (err) {
       console.log(err);
-      posthog.capture("proposal_section_delete_failed", {
+      analyticsClient.capture("proposal_section_delete_failed", {
         bidId: object_id,
         sectionId,
         error: err.message
@@ -192,7 +192,7 @@ const ProposalPlan = () => {
   const handleEditClick = async (section: Section, index: number) => {
     try {
       // Use preview-specific loading state
-      posthog.capture("proposal_section_edit", {
+      analyticsClient.capture("proposal_section_edit", {
         bidId: object_id,
         sectionId: section.section_id,
         sectionHeading: section.heading
@@ -333,7 +333,7 @@ const ProposalPlan = () => {
 
       // Track status changes
       if (field === "status") {
-        posthog.capture("proposal_section_status_changed", {
+        analyticsClient.capture("proposal_section_status_changed", {
           bidId: object_id,
           sectionIndex: index,
           newStatus: value
@@ -342,7 +342,7 @@ const ProposalPlan = () => {
 
       // Track answer changes
       if (field === "answer") {
-        posthog.capture("proposal_section_answer_updated", {
+        analyticsClient.capture("proposal_section_answer_updated", {
           bidId: object_id,
           sectionIndex: index,
           answerLength: value.length
