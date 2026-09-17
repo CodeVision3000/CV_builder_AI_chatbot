@@ -22,7 +22,7 @@ import {
 } from "./helper";
 import Welcome from "./Welcome";
 import useShowWelcome from "../../hooks/useShowWelcome";
-import posthog from "posthog-js";
+import analyticsClient from "../../utilities/analyticsClient";
 import SignoutFab from "./components/SignoutFab/SignoutFab";
 
 const WordpaneCopilot = () => {
@@ -143,7 +143,7 @@ const WordpaneCopilot = () => {
   }, [showOptions]);
 
   const handleClickMessageShortcut = (action: IShortcutType, message: IMessage) => {
-    posthog.capture("word_addin_message_shortcut_clicked", {
+    analyticsClient.capture("word_addin_message_shortcut_clicked", {
       action,
       messageType: message.type,
       client_type: "word_add_in",
@@ -229,7 +229,7 @@ const WordpaneCopilot = () => {
       | "Start"
       | "End"
   ) => {
-    posthog.capture("word_addin_insert_started", {
+    analyticsClient.capture("word_addin_insert_started", {
       contentType: type,
       insertLocation,
       client_type: "word_add_in",
@@ -250,7 +250,7 @@ const WordpaneCopilot = () => {
             }
             await context.sync();
 
-            posthog.capture("word_addin_insert_succeeded", {
+            analyticsClient.capture("word_addin_insert_succeeded", {
               contentType: type,
               insertLocation,
               client_type: "word_add_in",
@@ -258,7 +258,7 @@ const WordpaneCopilot = () => {
           })
           .catch((error) => {
             console.error("Error: ", error);
-            posthog.capture("word_addin_insert_failed", {
+            analyticsClient.capture("word_addin_insert_failed", {
               contentType: type,
               insertLocation,
               error: error.message,
@@ -266,7 +266,7 @@ const WordpaneCopilot = () => {
             });
           });
       } catch (error) {
-        posthog.capture("word_addin_insert_error", {
+        analyticsClient.capture("word_addin_insert_error", {
           contentType: type,
           insertLocation,
           error: error.message,
@@ -277,7 +277,7 @@ const WordpaneCopilot = () => {
   };
 
   const handleClickMenuItem = (item: { id: IPromptType; title: string }) => () => {
-    posthog.capture("word_addin_menu_item_clicked", {
+    analyticsClient.capture("word_addin_menu_item_clicked", {
       itemId: item.id,
       itemTitle: item.title,
       client_type: "word_add_in",
@@ -321,7 +321,7 @@ const WordpaneCopilot = () => {
 
   const handleClickSubmitButton = () => {
     setShowWelcome(false);
-    posthog.capture("word_addin_submit_clicked", {
+    analyticsClient.capture("word_addin_submit_clicked", {
       isRefine,
       isCustomPrompt,
       selectedTab,
@@ -394,7 +394,7 @@ const WordpaneCopilot = () => {
 
   const handleLibraryChatMessage = (request: IMessageRequest) => {
     if (request.instructionText.trim() !== "") {
-      posthog.capture("word_addin_library_chat_message_sent", {
+      analyticsClient.capture("word_addin_library_chat_message_sent", {
         isRefine: request.isRefine,
         hasHighlightedText: !!request.highlightedText,
         client_type: "word_add_in",
@@ -416,14 +416,14 @@ const WordpaneCopilot = () => {
       askLibraryChatQuestion(tokenRef.current, request)
         .then((message) => {
           setLibraryChatMessages((messages) => [...messages.slice(0, -1), message]);
-          posthog.capture("word_addin_library_chat_response_received", {
+          analyticsClient.capture("word_addin_library_chat_response_received", {
             messageType: message.type,
             client_type: "word_add_in",
           });
         })
         .catch((error) => {
           console.log(error);
-          posthog.capture("word_addin_library_chat_error", {
+          analyticsClient.capture("word_addin_library_chat_error", {
             error: error.message,
             client_type: "word_add_in",
           });
@@ -496,7 +496,7 @@ const WordpaneCopilot = () => {
 
   // Track tab changes
   useEffect(() => {
-    posthog.capture("word_addin_tab_changed", {
+    analyticsClient.capture("word_addin_tab_changed", {
       newTab: selectedTab,
       client_type: "word_add_in",
     });
@@ -505,7 +505,7 @@ const WordpaneCopilot = () => {
   // Track welcome screen visibility
   useEffect(() => {
     if (!showWelcome) {
-      posthog.capture("word_addin_welcome_closed", {
+      analyticsClient.capture("word_addin_welcome_closed", {
         client_type: "word_add_in",
       });
     }

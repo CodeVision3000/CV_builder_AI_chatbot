@@ -4,7 +4,7 @@ import { Alert, Button, Snackbar, TextField, Modal, Box, Link, Typography } from
 import useAuthSignIn from "./UseAuthsignIn";
 import AuthState from "./AuthState";
 import axios from "axios";
-import { apiURL } from "../../helper/urls";
+import { apiURL, m365SignInURL } from "../../helper/urls";
 import useShowWelcome from "../../hooks/useShowWelcome";
 
 const FullScreenTwoCards = () => {
@@ -62,6 +62,10 @@ const FullScreenTwoCards = () => {
     }
   };
 
+  const handleM365SignIn = () => {
+    window.location.href = m365SignInURL;
+  };
+
   const inputProps = {
     style: {
       WebkitBoxShadow: "0 0 0 1000px white inset",
@@ -85,6 +89,10 @@ const FullScreenTwoCards = () => {
         <div className="cardmini">
           <div className="cardmini-text">
             <h2>Login</h2>
+
+            <Button className="login-button" variant="outlined" onClick={handleM365SignIn}>
+              Sign in with Microsoft 365
+            </Button>
 
             <div className="input-field">
               <TextField

@@ -11,39 +11,9 @@ import "./Proposal.css";
 import "./Upload.css";
 import "bootstrap/dist/css/bootstrap.css";
 import ThemeProvider from "../providers/ThemeProvider";
-import posthog from "posthog-js";
+import analyticsClient from "../utilities/analyticsClient";
 
-// Initialize PostHog with Word Add-in specific configuration
-posthog.init("phc_bdUxtNoJmZWNnu1Ar29zUtusFQ4bvU91fZpLw5v4Y3e", {
-  api_host: "https://eu.i.posthog.com",
-  person_profiles: "identified_only",
-  bootstrap: {
-    distinctID: "unknown_user",
-    isIdentifiedID: false,
-    featureFlags: {},
-    featureFlagPayloads: {},
-  },
-  autocapture: false,
-  loaded: (posthog) => {
-    // Check for authenticated user immediately after loading
-    const authState = JSON.parse(localStorage.getItem("_auth_state") || "{}");
-    if (authState.email) {
-      posthog.identify(authState.email, {
-        email: authState.email,
-        app_type: "word_add_in",
-        platform: "microsoft_office",
-        client: "word",
-      });
-    } else {
-      // Only register default properties if user is not identified
-      posthog.register({
-        app_type: "word_add_in",
-        platform: "microsoft_office",
-        client: "word",
-      });
-    }
-  },
-});
+analyticsClient.init();
 
 interface AppProps {
   title: string;
@@ -80,7 +50,7 @@ const Layout: React.FC<{ title: string }> = ({ title }) => {
     }
 
     if (auth?.email) {
-      posthog.identify(auth.email, {
+      analyticsClient.identify(auth.email, {
         email: auth.email,
         app_type: "word_add_in",
         platform: "microsoft_office",
@@ -88,7 +58,7 @@ const Layout: React.FC<{ title: string }> = ({ title }) => {
       });
     }
 
-    posthog.capture("word_addin_loaded", {
+    analyticsClient.capture("word_addin_loaded", {
       title,
       environment: "microsoft_word",
       email: auth?.email || "unknown_user",

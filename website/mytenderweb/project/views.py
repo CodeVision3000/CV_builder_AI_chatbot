@@ -16,15 +16,12 @@ from reportlab.graphics import renderPDF
 from reportlab.lib import colors
 from django.template.loader import render_to_string
 from django.contrib import messages
-from .brevo import add_email_to_brevo_list
-import stripe
 from django.views.generic import TemplateView
 from django.views import View
 from django.http import JsonResponse, HttpResponse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, redirect, reverse
-from datetime import datetime, timedelta
+from django.shortcuts import render, redirect
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +47,7 @@ def trial_signup(request):
                 Thank you for signing up for a free trial of mytender.io!
                 Your trial code is: {trial_code}
                 
-                You can activate your trial by entering the discount code in your stripe checkout.
+                You can activate your trial by contacting our team for onboarding support.
                 Your trial will be valid for 14 days.
 
                 If you have any questions, please contact us at info@mytender.io.
@@ -87,9 +84,6 @@ def trial_signup(request):
 
 
 def home(request):
-
-    stripe_publishable_key = os.getenv('STRIPE_PUBLISHABLE_KEY_LIVE')
-
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -111,10 +105,6 @@ def home(request):
                 )
                 logger.debug("Email sent successfully.")
                 print("Email sent successfully.")
-
-                 # Add email to Brevo list contact-us, 5
-                add_email_to_brevo_list(email, 5)
-
                 return redirect('thankyou')  # Redirect to thank you page
             except Exception as e:
                 logger.error(f"Error sending email: {e}")
@@ -128,7 +118,7 @@ def home(request):
         form = ContactForm()
         logger.debug("Rendering form.")
 
-    return render(request, 'index.html', {'form': form, 'stripe_publishable_key': stripe_publishable_key})
+    return render(request, 'index.html', {'form': form})
 
 
 
@@ -187,9 +177,6 @@ def calculator(request):
                 notification_email.send()
                 print("Email sent successfully.")
 
-                # Add email to Brevo list roi-calculator, 4
-                add_email_to_brevo_list(email, 4)
-
             except Exception as e:
                 print(f"Error sending email: {e}")
 
@@ -235,9 +222,6 @@ def guide(request):
                 )
                 print("Guide email sent successfully.")
 
-                # Add email to Brevo list meta-guide-download, 3
-                add_email_to_brevo_list(email, 3)
-
                 return render(request, 'guideThankYouForm.html')
             except Exception as e:
                 print(f"Error sending guide email: {e}")
@@ -254,103 +238,20 @@ def guide(request):
 
 
 
-########################### PAYMENT ################################################################################
-
-
-
-
-stripe.api_key = os.getenv('STRIPE_SECRET_KEY_LIVE')
-
-
 def cancel(request) -> HttpResponse:
     return render(request, 'enrollmentTesting.html')
 
 
 def success(request) -> HttpResponse:
-
-    print(f'{request.session = }')
-
-    stripe_checkout_session_id = request.GET['session_id']
-
     return render(request, 'success.html')
 
 def testingEnrollment(request):
-
-    stripe_publishable_key = os.getenv('STRIPE_PUBLISHABLE_KEY_LIVE')
-    
-    return render(request, 'enrollmentTesting.html', {'stripe_publishable_key': stripe_publishable_key})
-
-
-
-DOMAIN = os.getenv('DOMAIN')
-
-DISCOUNT_CODE = 'SPECIAL75'  # You can change this to your desired discount code
-TRIAL_DISCOUNT_CODE = 'TENDERTRIAL75'  # New discount code for trial + 75% off
+    return render(request, 'enrollmentTesting.html')
 
 def create_checkout_session(request) -> HttpResponse:
-    price_lookup_key = request.POST['price_lookup_key']
-    discount_code = request.POST.get('discount_code')
-   
-    try:
-        prices = stripe.Price.list(lookup_keys=[price_lookup_key], expand=['data.product'])
-        price_item = prices.data[0]
-       
-        line_items = [{'price': price_item.id, 'quantity': 1}]
-       
-        # Apply discount if the correct code is provided
-        if discount_code == DISCOUNT_CODE:
-            # Create a coupon for 75% off for 3 months
-            coupon = stripe.Coupon.create(
-                percent_off=75,
-                duration='repeating',
-                duration_in_months=3,
-                name='75% Off for 3 months'
-            )
-           
-            # Set up the 14-day free trial
-            trial_end = int((datetime.now() + timedelta(days=15)).timestamp())
-           
-            checkout_session = stripe.checkout.Session.create(
-                line_items=line_items,
-                mode='subscription',
-                discounts=[{'coupon': coupon.id}],
-                subscription_data={'trial_end': trial_end},
-                success_url=DOMAIN + reverse('success') + '?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=DOMAIN + reverse('cancel')
-            )
-        elif discount_code == TRIAL_DISCOUNT_CODE:
-            # New coupon: 2-week free trial + 75% off for 1 month
-            coupon = stripe.Coupon.create(
-                percent_off=75,
-                duration='once',
-                name='75% Off for 1 month after 2-week trial'
-            )
-           
-            # Set up the 14-day free trial
-            trial_end = int((datetime.now() + timedelta(days=15)).timestamp())
-           
-            checkout_session = stripe.checkout.Session.create(
-                line_items=line_items,
-                mode='subscription',
-                discounts=[{'coupon': coupon.id}],
-                subscription_data={'trial_end': trial_end},
-                success_url=DOMAIN + reverse('success') + '?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=DOMAIN + reverse('cancel')
-            )
-        else:
-            # Regular checkout with 14-day free trial
-            checkout_session = stripe.checkout.Session.create(
-                line_items=line_items,
-                mode='subscription',
-                allow_promotion_codes=True,
-                subscription_data={
-                    'trial_period_days': 14
-                },
-                success_url=DOMAIN + reverse('success') + '?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=DOMAIN + reverse('cancel')
-            )
-       
-        return redirect(checkout_session.url, code=303)
-    except Exception as e:
-        print(e)
-        return HttpResponse("Server error", status=500)
+    messages.add_message(
+        request,
+        messages.INFO,
+        "Online checkout is unavailable. Please contact the team to activate your subscription.",
+    )
+    return redirect("home")

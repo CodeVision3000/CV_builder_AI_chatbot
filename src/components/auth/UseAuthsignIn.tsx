@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSignIn } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { API_URL, HTTP_PREFIX } from "../../helper/Constants";
-import posthog from "posthog-js";
+import analyticsClient from "../../utilities/analyticsClient";
 
 const useAuthSignIn = () => {
   const signIn = useSignIn();
@@ -49,8 +49,8 @@ const useAuthSignIn = () => {
 
         //localStorage.clear();
 
-        posthog.identify(res.data.email);
-        posthog.capture("user_active", {
+        analyticsClient.identify(res.data.email);
+        analyticsClient.capture("user_active", {
           distinct_id: res.data.email,
           timestamp: new Date().toISOString()
         });

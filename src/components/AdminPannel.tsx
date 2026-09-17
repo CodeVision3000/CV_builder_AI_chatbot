@@ -14,7 +14,7 @@ interface IAttributesConfig {
   email: string;
   company: string;
   jobRole: string;
-  stripe_customer_id: string;
+  billing_customer_id: string;
   organisation_id: string;
   region: string;
   product_name: string;
@@ -63,7 +63,7 @@ const defaultAttributesConfig: IAttributesConfig = {
   email: "",
   company: "",
   jobRole: "",
-  stripe_customer_id: "",
+  billing_customer_id: "",
   organisation_id: "",
   region: "",
   product_name: "",
@@ -350,11 +350,11 @@ const AdminPannel = () => {
           />
         </div>
         <div className="form-group">
-          <label>Stripe Customer ID:</label>
+          <label>Billing Customer ID:</label>
           <input
             type="text"
-            value={data.stripe_customer_id}
-            onChange={(e) => handleChange("stripe_customer_id", e.target.value)}
+            value={data.billing_customer_id}
+            onChange={(e) => handleChange("billing_customer_id", e.target.value)}
           />
         </div>
         <div className="form-group">

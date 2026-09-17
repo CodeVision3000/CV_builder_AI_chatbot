@@ -377,17 +377,6 @@ const ProfilePage = () => {
                       >
                         Add New User
                       </Button>
-                      <button
-                        className="orange-button ms-2"
-                        onClick={() =>
-                          window.open(
-                            "https://billing.stripe.com/p/login/00g6p52WPfRG22I8ww",
-                            "_blank"
-                          )
-                        }
-                      >
-                        Stripe Invoices
-                      </button>
                     </div>
                   </div>
                   <Card.Text>Licenses available: {formData.licences}</Card.Text>

@@ -19,7 +19,7 @@ import "./Proposal.css";
 import { BidContext } from "./BidWritingStateManagerView.tsx";
 import { TabProvider } from "../routes/TabProvider.tsx";
 import BidCompilerWizard from "../wizards/BidCompilerWizard.tsx";
-import posthog from "posthog-js";
+import analyticsClient from "../utilities/analyticsClient";
 import { displayAlert } from "../helper/Alert.tsx";
 
 const Proposal = () => {
@@ -42,7 +42,7 @@ const Proposal = () => {
     currentUserPermission === "admin" || currentUserPermission === "editor";
 
   const exportToDocx = (editorState) => {
-    posthog.capture("proposal_export_to_word", {
+    analyticsClient.capture("proposal_export_to_word", {
       bidId: sharedState.object_id,
       bidName: bidInfo
     });
@@ -79,7 +79,7 @@ const Proposal = () => {
 
   const handleSaveProposal = async () => {
     setIsLoading(true);
-    posthog.capture("proposal_save_started", {
+    analyticsClient.capture("proposal_save_started", {
       bidId: sharedState.object_id,
       bidName: bidInfo
     });
@@ -88,13 +88,13 @@ const Proposal = () => {
     try {
       await saveProposal();
       displayAlert("Proposal saved successfully", "success");
-      posthog.capture("proposal_save_succeeded", {
+      analyticsClient.capture("proposal_save_succeeded", {
         bidId: sharedState.object_id,
         bidName: bidInfo
       });
     } catch (error) {
       displayAlert("Failed to save proposal", "danger");
-      posthog.capture("proposal_save_failed", {
+      analyticsClient.capture("proposal_save_failed", {
         bidId: sharedState.object_id,
         bidName: bidInfo,
         error: error.message
